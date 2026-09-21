@@ -15,6 +15,8 @@ import type {
   Vote,
 } from "./types";
 import { MILLION_LADDER } from "./types";
+import { imagePoints } from "./scoring";
+import { balancedTeam } from "./teams";
 
 /* ==================================================================
  *  إنشاء الغرفة والانضمام
@@ -80,18 +82,6 @@ export async function fetchPlayers(roomId: string): Promise<Player[]> {
   return (data ?? []) as Player[];
 }
 
-/** يوزّع اللاعب على الفريق الأقل عددًا (وعند التعادل: الأقل نقاطًا) */
-export function balancedTeam(players: Player[]): Team {
-  const falcons = players.filter((p) => p.team === "falcons");
-  const elite = players.filter((p) => p.team === "elite");
-  if (falcons.length !== elite.length) return falcons.length < elite.length ? "falcons" : "elite";
-
-  const sum = (list: Player[]) => list.reduce((t, p) => t + p.score, 0);
-  const sf = sum(falcons);
-  const se = sum(elite);
-  if (sf !== se) return sf < se ? "falcons" : "elite";
-  return Math.random() < 0.5 ? "falcons" : "elite";
-}
 
 export interface JoinInput {
   roomId: string;
@@ -446,11 +436,6 @@ export async function fetchVotes(roomId: string, questionId: string): Promise<Vo
  *  الاحتساب والكشف
  * ================================================================== */
 
-/** نقاط «خمّن الصورة»: كل ما كانت الصورة أقرب وقت الإجابة، النقاط أعلى */
-export function imagePoints(base: number, zoomStep: number): number {
-  const factor = [1, 0.8, 0.6, 0.4, 0.2][Math.min(4, Math.max(0, zoomStep - 1))];
-  return Math.round(base * factor);
-}
 
 /**
  * يكشف الإجابة ويحتسب النقاط.
@@ -618,4 +603,4 @@ export async function showAskFamilyResults(room: Room): Promise<Room> {
   return updateRoom(room.id, { round_state: { ...room.round_state, showVotes: true } });
 }
 
-export { MILLION_LADDER };
+export { MILLION_LADDER, imagePoints, balancedTeam };

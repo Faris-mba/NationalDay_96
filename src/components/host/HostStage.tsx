@@ -9,7 +9,7 @@ import { MILLION_LADDER, ROUND_META, TEAMS } from "@/lib/types";
 import type { Answer, Buzz, Player, Room, Team, Vote } from "@/lib/types";
 
 const LETTERS = ["أ", "ب", "ج", "د"];
-const LATIN = ["A", "B", "C", "D"];
+
 
 interface Props {
   room: Room;
@@ -559,4 +559,3 @@ function Finished({ room, players }: Props) {
   );
 }
 
-export { LETTERS, LATIN };
