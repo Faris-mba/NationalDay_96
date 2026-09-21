@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #04140b;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* خلفية الهوية: أخضر عميق بلمسات ذهبية */
+.bg-identity {
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(212, 175, 55, 0.18), transparent 60%),
+    radial-gradient(900px 600px at 105% 15%, rgba(10, 143, 74, 0.35), transparent 62%),
+    linear-gradient(160deg, #00280f 0%, #00170a 55%, #04140b 100%);
+}
+
+.gold-text {
+  background: linear-gradient(95deg, #f4dd8f, #d4af37 45%, #f7e9ad 70%, #c79a25);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.gold-border {
+  border: 2px solid rgba(212, 175, 55, 0.55);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.12) inset;
+}
+
+/* أزرار الجوال: كبيرة، وبلا تحديد نص أو تكبير مزعج */
+.tap {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* شريط تمرير رفيع للوحة المقدّم */
+.thin-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
