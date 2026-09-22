@@ -107,7 +107,7 @@ function Lobby({ room, players, onlineIds, joinUrl }: Props) {
 /* ------------------------------------------------------------------ */
 
 function QuestionStage(props: Props) {
-  const { room, players, answers, buzzes, votes, remaining, total, running } = props;
+  const { room, players, answers, remaining, total, running } = props;
   const q = room.current_question;
 
   const answeredCount = answers.length;
@@ -404,7 +404,7 @@ function FamilyStage({ room, votes, players }: Props) {
 /* ------------------------------------------------------------------ */
 
 function MillionStage(props: Props) {
-  const { room, answers, players, votes } = props;
+  const { room, players, votes } = props;
   const q = room.current_question!;
   const team = q.team ?? "falcons";
   const revealed = room.phase === "reveal";

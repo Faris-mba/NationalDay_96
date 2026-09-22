@@ -22,7 +22,11 @@ export function useQuestionData(roomId: string | null, questionId: string | null
   const [buzzes, setBuzzes] = useState<Buzz[]>([]);
   const [votes, setVotes] = useState<Vote[]>([]);
   const qRef = useRef(questionId);
-  qRef.current = questionId;
+
+  // يُحدَّث بعد العرض؛ يُستخدم لتجاهل أحداث تخصّ سؤالًا سابقًا
+  useEffect(() => {
+    qRef.current = questionId;
+  }, [questionId]);
 
   const reload = useCallback(async () => {
     if (!roomId || !questionId) {

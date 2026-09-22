@@ -50,7 +50,12 @@ export function useRoomChannel({ code, presence }: Options): RoomChannelState {
   const roomIdRef = useRef<string | null>(null);
   const handlersRef = useRef(new Map<string, Set<(p: Record<string, unknown>) => void>>());
   const presenceRef = useRef(presence);
-  presenceRef.current = presence;
+
+  // تحديث المرجع بعد العرض لا أثناءه (قاعدة react-hooks/refs).
+  // القيمة الأولية تأتي من useRef نفسه، فلا فجوة عند أول تركيب.
+  useEffect(() => {
+    presenceRef.current = presence;
+  }, [presence]);
 
   const upper = code?.toUpperCase() ?? "";
 
