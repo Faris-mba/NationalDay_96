@@ -6,6 +6,7 @@ import Link from "next/link";
 import { balancedTeam, fetchPlayers, fetchRoom, joinRoom } from "@/lib/game";
 import { getClientId, recallPlayer, rememberPlayer } from "@/lib/identity";
 import { supabaseConfigured } from "@/lib/supabase";
+import ConfigNeeded from "@/components/ConfigNeeded";
 import { TEAMS, type Player, type PlayerCategory, type Room, type Team } from "@/lib/types";
 import { unlockAudio } from "@/lib/sound";
 
@@ -29,7 +30,6 @@ export default function JoinPage({ params }: { params: Promise<{ code: string }>
   // تحميل الغرفة + استعادة اللاعب لو انضم من قبل على هذا الجهاز
   useEffect(() => {
     if (!supabaseConfigured) {
-      setError("إعدادات Supabase ناقصة — راجع README");
       setLoading(false);
       return;
     }
@@ -104,6 +104,8 @@ export default function JoinPage({ params }: { params: Promise<{ code: string }>
       setSubmitting(false);
     }
   };
+
+  if (!supabaseConfigured) return <ConfigNeeded />;
 
   if (loading) {
     return (

@@ -9,6 +9,8 @@ import { useQuestionData } from "@/lib/useQuestionData";
 import { getClientId, recallPlayer } from "@/lib/identity";
 import { loadMutePreference, play, setMuted as setMutedPref, unlockAudio } from "@/lib/sound";
 import * as game from "@/lib/game";
+import { supabaseConfigured } from "@/lib/supabase";
+import ConfigNeeded from "@/components/ConfigNeeded";
 import { ROUND_META, TEAMS, type ActiveQuestion, type Player, type Room } from "@/lib/types";
 
 const LATIN = ["A", "B", "C", "D"];
@@ -54,6 +56,8 @@ export default function PlayPage({ params }: { params: Promise<{ code: string }>
     const id = window.setInterval(() => void game.heartbeat(me.id), 25000);
     return () => window.clearInterval(id);
   }, [me]);
+
+  if (!supabaseConfigured) return <ConfigNeeded />;
 
   if (!saved) return null;
 

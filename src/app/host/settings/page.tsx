@@ -6,6 +6,7 @@ import { fetchRoom, saveSettings } from "@/lib/game";
 import { ALL_QUESTIONS, effectiveBank, mergeSettings } from "@/lib/questions";
 import { recallHostRoom } from "@/lib/identity";
 import { supabaseConfigured } from "@/lib/supabase";
+import ConfigNeeded from "@/components/ConfigNeeded";
 import { ROUND_META, type HostSettings, type Question, type Room, type RoundKey } from "@/lib/types";
 
 const ROUND_KEYS = Object.keys(ROUND_META) as RoundKey[];
@@ -64,6 +65,8 @@ export default function SettingsPage() {
     },
     [room]
   );
+
+  if (!supabaseConfigured) return <ConfigNeeded />;
 
   if (loading) {
     return (

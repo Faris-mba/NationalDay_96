@@ -7,6 +7,7 @@ import HostControls from "@/components/host/HostControls";
 import Scoreboard from "@/components/Scoreboard";
 import Confetti from "@/components/Confetti";
 import { supabaseConfigured } from "@/lib/supabase";
+import ConfigNeeded from "@/components/ConfigNeeded";
 import { useCountdown, useRoomChannel } from "@/lib/useRoom";
 import { useQuestionData } from "@/lib/useQuestionData";
 import { getClientId, recallHostRoom, rememberHostRoom } from "@/lib/identity";
@@ -25,11 +26,6 @@ export default function HostPage() {
   useEffect(() => {
     if (started.current) return;
     started.current = true;
-    if (!supabaseConfigured) {
-      setBootError("إعدادات Supabase ناقصة — راجع ملف README وأضف .env.local");
-      return;
-    }
-
     const existing = recallHostRoom();
     if (existing) {
       setCode(existing);
@@ -45,6 +41,8 @@ export default function HostPage() {
       .catch((e: unknown) => setBootError(e instanceof Error ? e.message : "تعذّر إنشاء الغرفة"))
       .finally(() => setCreating(false));
   }, []);
+
+  if (!supabaseConfigured) return <ConfigNeeded />;
 
   if (bootError) {
     return (
